@@ -24,5 +24,15 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        final Button inscriptionButton = (Button) findViewById(R.id.inscription_button);
+        inscriptionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Inscription.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
