@@ -1,0 +1,99 @@
+CREATE TABLE Utilisateur(
+  Pseudo VARCHAR(255) NOT NULL,
+  Nom VARCHAR(255),
+  Prenom VARCHAR(255),
+  MotDePasse VARCHAR(255),
+  Email VARCHAR(255),
+  Latitude DOUBLE,
+  Longitute DOUBLE,
+  PRIMARY KEY(Pseudo)
+) ENGINE = InnoDB;
+
+CREATE TABLE Musique(
+  ID INT(10) NOT NULL AUTO_INCREMENT,
+  AlbumID INT(10) NOT NULL,
+  Titre VARCHAR(255),
+  DateSortie DATE,
+  Duree VARCHAR(255),
+  CoverPhoto VARCHAR(255),
+  Url VARCHAR(255),
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB;
+
+CREATE TABLE Artiste(
+  ID INT(10) NOT NULL AUTO_INCREMENT,
+  Nom VARCHAR(255),
+  Photo VARCHAR(255),
+  Description VARCHAR(255),
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB;
+
+CREATE TABLE Genre(
+  ID INT(10) NOT NULL AUTO_INCREMENT,
+  Libelle VARCHAR(255),
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB;
+
+CREATE TABLE Album(
+  ID INT(10) NOT NULL AUTO_INCREMENT,
+  Nom VARCHAR(255),
+  CoverImage VARCHAR(255),
+  DateSortie DATE,
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB;
+
+CREATE TABLE Temps(
+  ID INT(10) NOT NULL AUTO_INCREMENT,
+  `Date` DATE,
+  Heure TIME,
+  MusiqueID INT(10) NOT NULL,
+  UtilisateurPseudo VARCHAR(255) NOT NULL,
+  PRIMARY KEY(ID)
+) ENGINE = InnoDB;
+
+CREATE TABLE chanter(
+  MusiqueID INT(10) NOT NULL,
+  ArtisteID INT(10) NOT NULL,
+  PRIMARY KEY(MusiqueID, ArtisteID)
+) ENGINE = InnoDB;
+
+CREATE TABLE avoir(
+  ArtisteID INT(10) NOT NULL,
+  AlbumID INT(10) NOT NULL,
+  PRIMARY KEY(ArtisteID, AlbumID)
+) ENGINE = InnoDB;
+
+CREATE TABLE appartient(
+  GenreID INT(10) NOT NULL,
+  MusiqueID INT(10) NOT NULL,
+  PRIMARY KEY(GenreID, MusiqueID)
+) ENGINE = InnoDB;
+
+
+ALTER TABLE
+  Temps ADD INDEX ecouter(MusiqueID),
+  ADD CONSTRAINT ecouter FOREIGN KEY(MusiqueID) REFERENCES Musique(ID);
+ALTER TABLE
+  Temps ADD INDEX ecouter2(UtilisateurPseudo),
+  ADD CONSTRAINT ecouter2 FOREIGN KEY(UtilisateurPseudo) REFERENCES Utilisateur(Pseudo);
+ALTER TABLE
+  chanter ADD INDEX chanter(MusiqueID),
+  ADD CONSTRAINT chanter FOREIGN KEY(MusiqueID) REFERENCES Musique(ID);
+ALTER TABLE
+  chanter ADD INDEX chanter2(ArtisteID),
+  ADD CONSTRAINT chanter2 FOREIGN KEY(ArtisteID) REFERENCES Artiste(ID);
+ALTER TABLE
+  avoir ADD INDEX avoir(ArtisteID),
+  ADD CONSTRAINT avoir FOREIGN KEY(ArtisteID) REFERENCES Artiste(ID);
+ALTER TABLE
+  avoir ADD INDEX avoir2(AlbumID),
+  ADD CONSTRAINT avoir2 FOREIGN KEY(AlbumID) REFERENCES Album(ID);
+ALTER TABLE
+  appartient ADD INDEX appartient(GenreID),
+  ADD CONSTRAINT appartient FOREIGN KEY(GenreID) REFERENCES Genre(ID);
+ALTER TABLE
+  appartient ADD INDEX appartient2(MusiqueID),
+  ADD CONSTRAINT appartient2 FOREIGN KEY(MusiqueID) REFERENCES Musique(ID);
+ALTER TABLE
+  Musique ADD INDEX trouve(AlbumID),
+  ADD CONSTRAINT trouve FOREIGN KEY(AlbumID) REFERENCES Album(ID);
