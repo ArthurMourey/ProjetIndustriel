@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="miage.org.projetindustriel.MainActivity">
+    tools:context="miage.org.projetindustriel.Map">
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,15 +18,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="50dp"
         android:weightSum="1">
-
-        <TextView
-            android:text="Lecture de musique"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_categorie"
-            android:layout_weight="0.08"
-            android:textAlignment="center"
-            android:textSize="24sp" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -46,7 +37,7 @@
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_mapmode"
             android:id="@+id/imageView"
-            android:layout_weight="0.88" />
+            android:layout_weight="0.95" />
 
         <TextView
             android:text="Musique en cours"
@@ -102,19 +93,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_slideshow"
-            android:id="@+id/imageButton" />
+            android:id="@+id/button_music_map" />
 
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_mylocation"
-            android:id="@+id/imageButton2" />
+            android:id="@+id/button_map_map" />
 
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_lock_power_off"
-            android:id="@+id/imageButton3" />
+            android:id="@+id/button_disconnect_map" />
     </LinearLayout>
 
 </RelativeLayout>
