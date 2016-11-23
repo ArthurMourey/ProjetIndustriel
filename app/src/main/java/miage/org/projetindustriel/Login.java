@@ -1,11 +1,15 @@
 package miage.org.projetindustriel;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +21,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 public class Login extends AppCompatActivity {
 
     @Override
@@ -25,6 +32,10 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("Nom de l'application");
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         final Button loginButton = (Button) findViewById(R.id.connection_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -40,9 +51,9 @@ public class Login extends AppCompatActivity {
                 EditText mdpEditText = (EditText) findViewById(R.id.password);
                 String mdp = mdpEditText.getText().toString();
                 values.add(mdp);
-                System.out.println(login+" - "+mdp);
                 try {
                     String a = post("http://www.madpumpkin.fr/index.php",keys, values);
+                    System.out.println("Réponse : "+a);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -71,8 +82,8 @@ public class Login extends AppCompatActivity {
             //encodage des paramètres de la requête
             String data="";
             for(int i=0;i<keys.size();i++){
-                if (i!=0) data += "&amp;";
-                data += URLEncoder.encode(keys.get(i), "UTF-8")+"="+ URLEncoder.encode(values.get(i), "UTF-8");
+                if (i!=0) data += "&#34;,&#34;"; //&quot;
+                data += URLEncoder.encode(keys.get(i), "UTF-8")+":"+ URLEncoder.encode(values.get(i), "UTF-8");
             }
             //création de la connection
             URL url = new URL(adress);
@@ -99,3 +110,5 @@ public class Login extends AppCompatActivity {
         return result;
     }
 }
+
+

@@ -1,0 +1,27 @@
+- BASE DE DONNEES :
+	- Modification de la méthode POST (côté client)
+	- Connection avec la base de données
+	- Requêtes PHP (côté serveur)
+	- Traitement de la réception de la réponse (côté client)
+
+- LECTEUR DE MUSIQUE :
+	- LECTEUR :
+		- Implémentation de l'exemple trouvé sur internet
+		- Adapter l'exemple au projet
+	- RECHERCHE :
+		- Fonctionnement de la barre de recherche
+		- Réalisation de la liste des musiques
+
+- GEOLOCALISATION :
+	- Trouver l'emplacement de l'utilisateur
+	- Afficher l'emplacement sur la carte
+	- Notifier le serveur de cet emplacement
+	- Récupérer les emplacements des utilisateurs proches
+	- Les afficher sur la carte
+
+- VISUALISATION UTILISATEURS :
+	- Créer une activité pour visualiser les informations d'un autre utilisateur
+	(quand on clique dessus sur la carte) : Nom, Musique qu'il écoute...
+
+- BONUS :
+	- Personnalisation
