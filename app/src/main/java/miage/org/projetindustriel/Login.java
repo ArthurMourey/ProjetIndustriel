@@ -5,6 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Login extends AppCompatActivity {
 
@@ -19,6 +30,22 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                List<String> keys = new ArrayList<String>();
+                List<String> values= new ArrayList<String>();
+                keys.add("login");
+                keys.add("password");
+                EditText loginEditText = (EditText) findViewById(R.id.login);
+                String login = loginEditText.getText().toString();
+                values.add(login);
+                EditText mdpEditText = (EditText) findViewById(R.id.password);
+                String mdp = mdpEditText.getText().toString();
+                values.add(mdp);
+                System.out.println(login+" - "+mdp);
+                try {
+                    String a = post("http://www.madpumpkin.fr/index.php",keys, values);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(Login.this, Musique.class);
                 startActivity(intent);
             }
@@ -34,5 +61,41 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static String post(String adress, List<String> keys, List<String> values) throws IOException {
+        String result = "";
+        OutputStreamWriter writer = null;
+        BufferedReader reader = null;
+        try {
+            //encodage des paramètres de la requête
+            String data="";
+            for(int i=0;i<keys.size();i++){
+                if (i!=0) data += "&amp;";
+                data += URLEncoder.encode(keys.get(i), "UTF-8")+"="+ URLEncoder.encode(values.get(i), "UTF-8");
+            }
+            //création de la connection
+            URL url = new URL(adress);
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+
+            //envoi de la requête
+            writer = new OutputStreamWriter(conn.getOutputStream());
+            writer.write(data);
+            writer.flush();
+
+            //lecture de la réponse
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String ligne;
+            while ((ligne = reader.readLine()) != null) {
+                result+=ligne;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            try{writer.close();}catch(Exception e){}
+            try{reader.close();}catch(Exception e){}
+        }
+        return result;
     }
 }
