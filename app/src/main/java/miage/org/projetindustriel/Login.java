@@ -43,16 +43,16 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 List<String> keys = new ArrayList<String>();
                 List<String> values= new ArrayList<String>();
-                keys.add("login");
-                keys.add("password");
                 EditText loginEditText = (EditText) findViewById(R.id.login);
                 String login = loginEditText.getText().toString();
-                values.add(login);
                 EditText mdpEditText = (EditText) findViewById(R.id.password);
                 String mdp = mdpEditText.getText().toString();
+                keys.add("login");
+                keys.add("password");
+                values.add(login);
                 values.add(mdp);
                 try {
-                    String a = post("http://www.madpumpkin.fr/index.php",keys, values);
+                    String a = post("http://www.madpumpkin.fr/index2.php",keys, values);
                     System.out.println("Réponse : "+a);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -81,9 +81,10 @@ public class Login extends AppCompatActivity {
         try {
             //encodage des paramètres de la requête
             String data="";
+            System.out.println("size = "+keys.size());
             for(int i=0;i<keys.size();i++){
-                if (i!=0) data += "&#34;,&#34;"; //&quot;
-                data += URLEncoder.encode(keys.get(i), "UTF-8")+":"+ URLEncoder.encode(values.get(i), "UTF-8");
+                if (i!=0) data += "&";
+                data += URLEncoder.encode(keys.get(i), "UTF-8")+"="+ URLEncoder.encode(values.get(i), "UTF-8");
             }
             //création de la connection
             URL url = new URL(adress);
