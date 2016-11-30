@@ -77,4 +77,14 @@
         android:hint="Login"
         android:textAlignment="center" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
+        android:id="@+id/errorMessage"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="normal|italic" />
+
 </RelativeLayout>

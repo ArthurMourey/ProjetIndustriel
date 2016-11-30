@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -51,14 +52,23 @@ public class Login extends AppCompatActivity {
                 keys.add("password");
                 values.add(login);
                 values.add(mdp);
+                boolean response = false;
                 try {
-                    String a = post("http://www.madpumpkin.fr/index2.php",keys, values);
-                    System.out.println("Réponse : "+a);
+                    String a = post("http://www.madpumpkin.fr/index.php",keys, values);
+                    if(a.contains("SUCCESS")){ //A modifier par la suite
+                        response = true;
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(Login.this, Musique.class);
-                startActivity(intent);
+                if(response){
+                    Intent intent = new Intent(Login.this, Musique.class);
+                    startActivity(intent);
+                }
+                else {
+                    TextView t = (TextView) findViewById(R.id.errorMessage);
+                    t.setText("Login ou mot de passe invalide, veuillez réessayer.");
+                }
             }
         });
 
