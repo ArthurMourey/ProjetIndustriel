@@ -6,15 +6,13 @@
 //mysqli_stmt_execute($statement);
 
 $response = array();
-echo json_encode($_POST);
 
 if(isset($_POST["login"]) && isset($_POST["password"])){
-   $response = ["SUCCESS"];
+   $response = "reponse:SUCCESS";
 }
 else{
-   $response = ["FAILURE"];
+   $response = "response:FAILURE";
 }
-
 
 echo json_encode($response);
 

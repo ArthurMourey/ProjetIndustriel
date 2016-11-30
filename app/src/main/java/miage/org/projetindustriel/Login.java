@@ -20,6 +20,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -52,16 +53,18 @@ public class Login extends AppCompatActivity {
                 keys.add("password");
                 values.add(login);
                 values.add(mdp);
-                boolean response = false;
+                boolean isValid = false;
                 try {
-                    String a = post("http://www.madpumpkin.fr/index.php",keys, values);
-                    if(a.contains("SUCCESS")){ //A modifier par la suite
-                        response = true;
+                    String response = DAO.post("http://www.madpumpkin.fr/index.php",keys, values);
+                    ArrayList<HashMap<String,String>> listResponse = DAO.parseResponse(response);
+                    System.out.println(listResponse);
+                    if(response.contains("SUCCESS")){ //A modifier par la suite
+                        isValid = true;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(response){
+                if(isValid){
                     Intent intent = new Intent(Login.this, Musique.class);
                     startActivity(intent);
                 }
@@ -82,43 +85,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-    }
-
-    public static String post(String adress, List<String> keys, List<String> values) throws IOException {
-        String result = "";
-        OutputStreamWriter writer = null;
-        BufferedReader reader = null;
-        try {
-            //encodage des paramètres de la requête
-            String data="";
-            System.out.println("size = "+keys.size());
-            for(int i=0;i<keys.size();i++){
-                if (i!=0) data += "&";
-                data += URLEncoder.encode(keys.get(i), "UTF-8")+"="+ URLEncoder.encode(values.get(i), "UTF-8");
-            }
-            //création de la connection
-            URL url = new URL(adress);
-            URLConnection conn = url.openConnection();
-            conn.setDoOutput(true);
-
-            //envoi de la requête
-            writer = new OutputStreamWriter(conn.getOutputStream());
-            writer.write(data);
-            writer.flush();
-
-            //lecture de la réponse
-            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                result+=ligne;
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-            try{writer.close();}catch(Exception e){}
-            try{reader.close();}catch(Exception e){}
-        }
-        return result;
     }
 }
 
