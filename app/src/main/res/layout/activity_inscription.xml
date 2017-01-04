@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/mail_inscription"
+        android:id="@+id/editText2"
         android:hint="Adresse mail"
         android:layout_below="@+id/prenom_inscription"
         android:layout_alignLeft="@+id/prenom_inscription"
@@ -61,4 +61,16 @@
         android:layout_below="@+id/editText4"
         android:layout_alignLeft="@+id/editText4"
         android:layout_alignStart="@+id/editText4" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/mail_inscription"
+        android:hint="Mot de passe"
+        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_marginTop="27dp" />
 </RelativeLayout>

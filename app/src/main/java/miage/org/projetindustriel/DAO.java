@@ -24,7 +24,6 @@ public class DAO {
         try {
             //encodage des paramètres de la requête
             String data="";
-            System.out.println("size = "+keys.size());
             for(int i=0;i<keys.size();i++){
                 if (i!=0) data += "&";
                 data += URLEncoder.encode(keys.get(i), "UTF-8")+"="+ URLEncoder.encode(values.get(i), "UTF-8");
