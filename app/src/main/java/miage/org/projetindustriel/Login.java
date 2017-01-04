@@ -56,7 +56,6 @@ public class Login extends AppCompatActivity {
                 boolean isValid = false;
                 try {
                     String response = DAO.post("http://www.madpumpkin.fr/index.php",keys, values);
-                    //ArrayList<HashMap<String,String>> listResponse = DAO.parseResponse(response);
                     System.out.println(response);
                     if(response.contains("SUCCESS")){ //A modifier par la suite
                         isValid = true;

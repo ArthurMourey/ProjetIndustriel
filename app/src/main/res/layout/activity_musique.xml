@@ -102,7 +102,7 @@
         android:layout_height="169dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        tools:background="@android:color/holo_blue_light">
+        android:background="@color/colorPrimary">
 
         <ImageButton
             android:layout_width="match_parent"
