@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
                 try {
                     String response = DAO.post("http://www.madpumpkin.fr/index.php",keys, values);
                     System.out.println(response);
-                    if(response.contains("SUCCESS")){ //A modifier par la suite
+                    if(response.contains("SUCCESS")){
                         isValid = true;
                     }
                 } catch (IOException e) {

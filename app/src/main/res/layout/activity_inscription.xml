@@ -10,45 +10,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="miage.org.projetindustriel.Inscription">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText4"
-        android:hint="Nom"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Veuillez remplir les champs ci-dessus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="89dp" />
-
-    <Button
-        android:text="S'inscrire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/submit_inscription_button"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:hint="Adresse mail"
-        android:layout_below="@+id/prenom_inscription"
-        android:layout_alignLeft="@+id/prenom_inscription"
-        android:layout_alignStart="@+id/prenom_inscription"
-        android:layout_marginTop="44dp" />
+        android:id="@+id/login_inscription"
+        android:hint="Login"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/nom_inscription"
+        android:layout_alignStart="@+id/nom_inscription" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/nom_inscription"
+        android:hint="Nom"
+        android:layout_below="@+id/login_inscription"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -57,20 +46,48 @@
         android:ems="10"
         android:id="@+id/prenom_inscription"
         android:hint="Prenom"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/editText4"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4" />
+        android:layout_below="@+id/nom_inscription"
+        android:layout_alignLeft="@+id/nom_inscription"
+        android:layout_alignStart="@+id/nom_inscription" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/mail_inscription"
+        android:hint="Adresse mail"
+        android:layout_below="@+id/prenom_inscription"
+        android:layout_alignLeft="@+id/prenom_inscription"
+        android:layout_alignStart="@+id/prenom_inscription" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/mail_inscription"
+        android:id="@+id/mdp_inscription"
         android:hint="Mot de passe"
-        android:layout_below="@+id/editText2"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_marginTop="27dp" />
+        android:layout_below="@+id/mail_inscription"
+        android:layout_alignLeft="@+id/mail_inscription"
+        android:layout_alignStart="@+id/mail_inscription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="57dp"
+        android:id="@+id/errorMessageInscription"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_above="@+id/submit_inscription_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="S'inscrire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit_inscription_button"
+        android:layout_marginBottom="63dp"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
