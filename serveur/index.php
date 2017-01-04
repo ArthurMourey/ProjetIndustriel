@@ -10,8 +10,10 @@ catch (Exception $e)
     echo json_encode("Erreur : ". $e->getMessage());
 }
 
-//Vérifications des logins
+//La réponse qui sera renvoyée suite à la demande client
 $response = array();
+
+//Vérifications des logins
 if(isset($_POST["login"]) && isset($_POST["password"])){
 	$query = $sql->prepare("SELECT COUNT(*) FROM Utilisateur WHERE Pseudo = :pseudo AND MotDePasse = :mdp");
         $query->bindParam(':pseudo', $_POST["login"], PDO::PARAM_STR);
@@ -25,11 +27,11 @@ if(isset($_POST["login"]) && isset($_POST["password"])){
 		$response = "reponse:FAILURE";
 	}
 }
-else{
-   $response = "response:FAILURE";
-}
 
+//Renvois de la réponse
 echo json_encode($response);
 
 
 ?>
+
+				
