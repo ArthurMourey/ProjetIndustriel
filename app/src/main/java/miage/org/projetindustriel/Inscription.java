@@ -27,16 +27,22 @@ public class Inscription extends AppCompatActivity {
             public void onClick(View v) {
                 List<String> keys = new ArrayList<String>();
                 List<String> values= new ArrayList<String>();
+                String login = "";
+                String mdp = "";
+                String prenom = "";
+                String nom = "";
+                String mail = "";
+
                 EditText loginEditText = (EditText) findViewById(R.id.login_inscription);
-                String login = loginEditText.getText().toString();
+                login += loginEditText.getText().toString();
                 EditText mdpEditText = (EditText) findViewById(R.id.mdp_inscription);
-                String mdp = mdpEditText.getText().toString();
+                mdp += mdpEditText.getText().toString();
                 EditText prenomEditText = (EditText) findViewById(R.id.prenom_inscription);
-                String prenom = prenomEditText.getText().toString();
+                prenom += prenomEditText.getText().toString();
                 EditText nomEditText = (EditText) findViewById(R.id.nom_inscription);
-                String nom = nomEditText.getText().toString();
+                nom += nomEditText.getText().toString();
                 EditText mailEditText = (EditText) findViewById(R.id.mail_inscription);
-                String mail = mailEditText.getText().toString();
+                mail += mailEditText.getText().toString();
                 keys.add("login_inscription");
                 keys.add("mdp_inscription");
                 keys.add("prenom_inscription");
@@ -47,8 +53,7 @@ public class Inscription extends AppCompatActivity {
                 values.add(prenom);
                 values.add(nom);
                 values.add(mail);
-                System.out.println(keys);
-                System.out.println(values);
+
                 if((login=="")||(mdp=="")||(nom=="")||(prenom=="")||(mail=="")){
                     TextView t = (TextView) findViewById(R.id.errorMessageInscription);
                     t.setText("Veuillez remplir TOUS les champs ci-dessus.");
@@ -59,6 +64,7 @@ public class Inscription extends AppCompatActivity {
                         System.out.println(response);
                         if(response.contains("SUCCESS")){
                             Intent intent = new Intent(Inscription.this, Login.class);
+                            intent.putExtra("inscription",true);
                             startActivity(intent);
                         }
                         else{
