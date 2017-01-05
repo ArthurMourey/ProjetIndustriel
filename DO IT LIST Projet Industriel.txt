@@ -1,8 +1,8 @@
-- BASE DE DONNEES :
-	- Modification de la méthode POST (côté client)
-	- Connection avec la base de données
-	- Requêtes PHP (côté serveur)
-	- Traitement de la réception de la réponse (côté client)
+- BASE DE DONNEES : X
+	- Modification de la méthode POST (côté client) X
+	- Connection avec la base de données X
+	- Requêtes PHP (côté serveur) X
+	- Traitement de la réception de la réponse (côté client) X
 
 - LECTEUR DE MUSIQUE :
 	- LECTEUR :
@@ -18,10 +18,6 @@
 	- Notifier le serveur de cet emplacement
 	- Récupérer les emplacements des utilisateurs proches
 	- Les afficher sur la carte
-
-- VISUALISATION UTILISATEURS :
-	- Créer une activité pour visualiser les informations d'un autre utilisateur
-	(quand on clique dessus sur la carte) : Nom, Musique qu'il écoute...
 
 - BONUS :
 	- Personnalisation
