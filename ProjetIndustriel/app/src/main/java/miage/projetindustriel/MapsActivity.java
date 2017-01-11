@@ -1,8 +1,17 @@
 package miage.projetindustriel;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,10 +46,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        double latitude = 0;
+        double longitude = 0;
+        LatLng artem = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(artem).title("Vous êtes ici !"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(artem));
 
+        setTitle("Géolocalisation");
+
+        final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_music_map);
+        bouton_map.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, Musique.class);
+                startActivity(intent);
+            }
+        });
+
+        final ImageButton bouton_disconnect = (ImageButton) findViewById(R.id.button_disconnect_map);
+        bouton_disconnect.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, Login.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -1,9 +1,8 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="miage.projetindustriel.MapsActivity">
@@ -16,7 +15,7 @@
     android:layout_marginLeft="50dp"
     android:weightSum="1">
 
-    <LinearLayout
+        <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,14 +30,14 @@
             android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_mapmode"
-        android:id="@+id/imageView"
-        android:layout_weight="0.95" />
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/map"
+            android:layout_weight="0.87" />
 
-    <TextView
+        <TextView
         android:text="Musique en cours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,16 +95,16 @@
         app:srcCompat="@android:drawable/ic_menu_slideshow"
         android:id="@+id/button_music_map" />
 
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_dialog_map"
-        android:id="@+id/button_map_map" />
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_mylocation"
+            android:id="@+id/button_map_map" />
 
-    <ImageButton
+        <ImageButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_lock_power_off"
         android:id="@+id/button_disconnect_map" />
     </LinearLayout>
-</fragment>
+</RelativeLayout>
