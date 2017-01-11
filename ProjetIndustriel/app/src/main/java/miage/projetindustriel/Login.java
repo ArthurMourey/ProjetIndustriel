@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Nom de l'application");
+        setTitle("Musy");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
                 values.add(mdp);
                 boolean isValid = false;
                 try {
-                    String response = DAO.post("http://www.madpumpkin.fr/index.php",keys, values);
+                    String response = DAO.post("http://www.madpumpkin.fr/login_inscription.php",keys, values);
                     System.out.println(response);
                     if(response.contains("SUCCESS")){
                         isValid = true;
