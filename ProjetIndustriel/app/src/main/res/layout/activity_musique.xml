@@ -40,14 +40,14 @@
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_menu_search"
-                android:id="@+id/imageButton4"
+                android:id="@+id/recherche"
                 android:layout_weight="1" />
 
         </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_weight="0.98"
+            android:layout_weight="0.91"
             android:layout_height="150dp" />
 
         <TextView
@@ -61,33 +61,33 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:weightSum="1">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_media_previous"
-                android:id="@+id/imageButton5" />
+                android:id="@+id/precedent" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_media_play"
-                android:id="@+id/imageButton6"
+                android:id="@+id/lecture"
                 android:layout_weight="1.11" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_media_pause"
-                android:id="@+id/imageButton7" />
+                android:id="@+id/pause" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_media_next"
-                android:id="@+id/imageButton8" />
+                android:id="@+id/suivant" />
         </LinearLayout>
 
     </LinearLayout>

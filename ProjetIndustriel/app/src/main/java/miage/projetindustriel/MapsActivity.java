@@ -3,6 +3,7 @@ package miage.projetindustriel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
@@ -54,8 +55,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setTitle("Géolocalisation");
 
-        final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_music_map);
-        bouton_map.setOnClickListener(new View.OnClickListener() {
+        final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_map_map);
+        bouton_map.setImageResource(R.drawable.geolocalisation);
+
+        final ImageButton bouton_music = (ImageButton) findViewById(R.id.button_music_map);
+        bouton_music.setImageResource(R.drawable.musique);
+        bouton_music.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -65,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         final ImageButton bouton_disconnect = (ImageButton) findViewById(R.id.button_disconnect_map);
+        bouton_disconnect.setImageResource(R.drawable.deconnexion);
         bouton_disconnect.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -73,5 +79,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
+
+        final ImageButton bouton_lecture = (ImageButton) findViewById(R.id.lecture);
+        bouton_lecture.setImageResource(R.drawable.lecture);
+
+        final ImageButton bouton_precedent = (ImageButton) findViewById(R.id.precedent);
+        bouton_precedent.setImageResource(R.drawable.precedent);
+
+        final ImageButton bouton_pause = (ImageButton) findViewById(R.id.pause);
+        bouton_pause.setImageResource(R.drawable.pause);
+
+        final ImageButton bouton_suivant = (ImageButton) findViewById(R.id.suivant);
+        bouton_suivant.setImageResource(R.drawable.suivant);
     }
 }
