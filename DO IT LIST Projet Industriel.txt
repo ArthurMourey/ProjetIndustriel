@@ -13,8 +13,8 @@
 		- Réalisation de la liste des musiques
 
 - GEOLOCALISATION :
-	- Trouver l'emplacement de l'utilisateur
-	- Afficher l'emplacement sur la carte
+	- Trouver l'emplacement de l'utilisateur x
+	- Afficher l'emplacement sur la carte x
 	- Notifier le serveur de cet emplacement
 	- Récupérer les emplacements des utilisateurs proches
 	- Les afficher sur la carte

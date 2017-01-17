@@ -3,8 +3,8 @@ package miage.projetindustriel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -12,17 +12,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Marker marqueur;
+    double latitude = 0.0;
+    double longitude = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +52,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        double latitude = 0;
+        maLocalisation();
+
+        setTitle("Géolocalisation");
+
+        /*double latitude = 0;
         double longitude = 0;
         LatLng artem = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(artem).title("Vous êtes ici !"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(artem));
-
-        setTitle("Géolocalisation");
+        */
 
         final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_map_map);
         bouton_map.setImageResource(R.drawable.geolocalisation);
@@ -91,5 +99,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         final ImageButton bouton_suivant = (ImageButton) findViewById(R.id.suivant);
         bouton_suivant.setImageResource(R.drawable.suivant);
+    }
+
+    private void ajouterMarqueur(double latitude, double longitude) {
+        LatLng coordonnees = new LatLng(latitude, longitude);
+        CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(coordonnees, 16);
+        if (marqueur != null) {
+            marqueur.remove();
+        }
+        marqueur = mMap.addMarker(new MarkerOptions().position(coordonnees).title("Vous êtes ici !").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_musique)));
+        mMap.animateCamera(zoomLocation);
+    }
+
+    private void actualLocation(Location location) {
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            ajouterMarqueur(latitude, longitude);
+        }
+    }
+
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            actualLocation(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+    private void maLocalisation() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        actualLocation(location);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
     }
 }

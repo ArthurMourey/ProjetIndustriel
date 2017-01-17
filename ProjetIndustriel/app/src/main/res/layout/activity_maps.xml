@@ -27,8 +27,7 @@
             android:layout_height="59dp"
             android:id="@+id/musique_ecoute_user"
             android:background="@color/colorPrimary"
-            android:textAlignment="center"
-            android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color"/>
+            android:textAlignment="center"/>
     </LinearLayout>
 
         <fragment
