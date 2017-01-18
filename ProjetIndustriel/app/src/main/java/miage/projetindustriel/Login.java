@@ -1,7 +1,11 @@
 package miage.projetindustriel;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,22 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 public class Login extends AppCompatActivity {
 
@@ -33,6 +24,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        createGpsDisabledAlert();
 
         setTitle("Musy");
 
@@ -84,7 +77,7 @@ public class Login extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(isValid){
-                    Intent intent = new Intent(Login.this, Musique.class);
+                    Intent intent = new Intent(Login.this, MusicActivity.class);
                     startActivity(intent);
                 }
                 else {
@@ -104,6 +97,38 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void createGpsDisabledAlert() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
+            localBuilder
+                    .setMessage("Cette applciation utilise la géolocalisation, voulez-vous l'activer ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Activer GPS",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    Login.this.showGpsOptions();
+                                }
+                            }
+                    );
+            localBuilder.setNegativeButton("Ne pas l'activer",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            paramDialogInterface.cancel();
+                            Login.this.finish();
+                        }
+                    }
+            );
+            localBuilder.create().show();
+        }
+    }
+
+    private void showGpsOptions() {
+        startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+        finish();
     }
 }
 

@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Musique" />
+        <activity android:name=".MusicActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".Inscription"></activity>
     </application>
