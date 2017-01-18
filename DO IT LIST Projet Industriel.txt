@@ -21,3 +21,6 @@
 
 - BONUS :
 	- Personnalisation
+
+- SECURITE :
+	- Crypter les mots de passe dans la base de données
