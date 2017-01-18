@@ -1,8 +1,6 @@
 package miage.projetindustriel;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -24,7 +22,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -156,12 +153,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
     }
 
-    private void utilisateursProches(){
+    /*private void utilisateursProches(){
         //Récupération de tous les utilisateurs
         ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>();
         for(Utilisateur u : listeUtilisateur){
             //Calcul de distance
             //Si pas proche : afficher avec un marqueur
         }
-    }
+    }*/
 }

@@ -1,14 +1,13 @@
 package miage.projetindustriel;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.LocationManager;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.Manifest;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +24,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createGpsDisabledAlert();
+        permission();
 
         setTitle("Musy");
 
@@ -99,36 +98,8 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void createGpsDisabledAlert() {
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
-            localBuilder
-                    .setMessage("Cette applciation utilise la géolocalisation, voulez-vous l'activer ?")
-                    .setCancelable(false)
-                    .setPositiveButton("Activer GPS",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                    Login.this.showGpsOptions();
-                                }
-                            }
-                    );
-            localBuilder.setNegativeButton("Ne pas l'activer",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                            paramDialogInterface.cancel();
-                            Login.this.finish();
-                        }
-                    }
-            );
-            localBuilder.create().show();
-        }
-    }
-
-    private void showGpsOptions() {
-        startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
-        finish();
+    private void permission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 }
 
