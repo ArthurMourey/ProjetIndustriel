@@ -1,4 +1,4 @@
-package miage.projetindustriel;
+package miage.projetindustriel.controller;
 
 
 import android.content.Intent;
@@ -13,9 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import miage.projetindustriel.R;
+import miage.projetindustriel.dao.DAO;
 
 public class Login extends AppCompatActivity {
 
@@ -23,7 +29,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         permission();
 
         setTitle("Musy");
@@ -39,15 +44,21 @@ public class Login extends AppCompatActivity {
                 inscription = null;
             } else {
                 inscription = extras.getBoolean("inscription");
-                TextView t = (TextView) findViewById(R.id.errorMessage);
-                t.setTextColor(Color.GREEN);
-                t.setText("Inscription réussie.");
+                if(inscription == true) {
+                    TextView t = (TextView) findViewById(R.id.errorMessage);
+                    t.setTextColor(Color.GREEN);
+                    t.setText("Inscription réussie.");
+                    inscription = null;
+                }
             }
         } else {
             inscription= (Boolean) savedInstanceState.getSerializable("inscription");
-            TextView t = (TextView) findViewById(R.id.errorMessage);
-            t.setTextColor(Color.GREEN);
-            t.setText("Inscription réussie.");
+            if(inscription == true) {
+                TextView t = (TextView) findViewById(R.id.errorMessage);
+                t.setTextColor(Color.GREEN);
+                t.setText("Inscription réussie.");
+                inscription = null;
+            }
         }
 
         final Button loginButton = (Button) findViewById(R.id.connection_button);
@@ -76,6 +87,25 @@ public class Login extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(isValid){
+                    FirebaseMessaging.getInstance().subscribeToTopic("share");
+                    FirebaseInstanceId.getInstance().getToken();
+
+                    List<String> tokenKey = new ArrayList<String>();
+                    List<String> valueToken = new ArrayList<String>();
+                    tokenKey.add("Token");
+                    tokenKey.add("Pseudo");
+                    valueToken.add(FirebaseInstanceId.getInstance().getToken());
+                    valueToken.add(login);
+                    System.out.println(valueToken);
+
+                    String insertToken = null;
+                    try {
+                        insertToken = DAO.post("http://www.madpumpkin.fr/fcm.php",tokenKey, valueToken);
+                        System.out.println(insertToken);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     Intent intent = new Intent(Login.this, MusicActivity.class);
                     startActivity(intent);
                 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1021038215329",
+    "firebase_url": "https://musy-e5554.firebaseio.com",
+    "project_id": "musy-e5554",
+    "storage_bucket": "musy-e5554.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021038215329:android:f08e88954ccb768e",
+        "android_client_info": {
+          "package_name": "miage.projetindustriel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021038215329-qhiobaqvk854qasuj6oh47tsou10h2tg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "miage.projetindustriel",
+            "certificate_hash": "6F2CAF3B6F5633D2A63A3876E0E0685C3AFA8997"
+          }
+        },
+        {
+          "client_id": "1021038215329-l6amgl8c7ufe73mi9m7heh2lr3vk2l8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB8VI_SNDGjwD2cVHybwIu_ucaKogVHL8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021038215329-l6amgl8c7ufe73mi9m7heh2lr3vk2l8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

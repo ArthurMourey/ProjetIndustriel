@@ -1,4 +1,4 @@
-package miage.projetindustriel;
+package miage.projetindustriel.model;
 
 /**
  * Created by Asus on 18/01/2017.

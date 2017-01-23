@@ -1,4 +1,4 @@
-package miage.projetindustriel;
+package miage.projetindustriel.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import miage.projetindustriel.R;
+import miage.projetindustriel.dao.DAO;
 
 public class Inscription extends AppCompatActivity {
 

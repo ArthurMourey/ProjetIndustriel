@@ -1,4 +1,4 @@
-package miage.projetindustriel;
+package miage.projetindustriel.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import miage.projetindustriel.R;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
