@@ -63,7 +63,7 @@ public class Inscription extends AppCompatActivity {
                 }
                 else{
                     try {
-                        String response = DAO.post("http://www.madpumpkin.fr/index.php",keys, values);
+                        String response = DAO.post("http://www.madpumpkin.fr/login_inscription.php",keys, values);
                         System.out.println(response);
                         if(response.contains("SUCCESS")){
                             Intent intent = new Intent(Inscription.this, Login.class);
