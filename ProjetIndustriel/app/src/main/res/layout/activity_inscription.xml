@@ -28,7 +28,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences|textPersonName"
         android:ems="10"
         android:id="@+id/nom_inscription"
         android:hint="Nom"
@@ -38,7 +38,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences|textPersonName"
         android:ems="10"
         android:id="@+id/prenom_inscription"
         android:hint="Prenom"
@@ -49,7 +49,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/mail_inscription"
         android:hint="Adresse mail"
