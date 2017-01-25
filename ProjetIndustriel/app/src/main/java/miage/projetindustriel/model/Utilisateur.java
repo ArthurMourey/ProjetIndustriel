@@ -5,10 +5,9 @@ package miage.projetindustriel.model;
  */
 
 public class Utilisateur {
-    private String nom;
-    private String prenom;
-    private String pseudo;
-    private Musique musiqueActuelle;
+    private static String nom;
+    private static String prenom;
+    private static String pseudo;
 
     public Utilisateur(String prenom, String nom, String pseudo) {
         this.prenom = prenom;
@@ -16,23 +15,27 @@ public class Utilisateur {
         this.pseudo = pseudo;
     }
 
-    public String getNom() {
+    public static String getNom() {
         return nom;
     }
 
-    public String getPrenom() {
+    public static String getPrenom() {
         return prenom;
     }
 
-    public String getPseudo() {
+    public static String getPseudo() {
         return pseudo;
     }
 
-    public Musique getMusiqueActuelle() {
-        return musiqueActuelle;
+    public static void setNom(String nom) {
+        Utilisateur.nom = nom;
     }
 
-    public void setMusiqueActuelle(Musique musiqueActuelle) {
-        this.musiqueActuelle = musiqueActuelle;
+    public static void setPrenom(String prenom) {
+        Utilisateur.prenom = prenom;
+    }
+
+    public static void setPseudo(String pseudo) {
+        Utilisateur.pseudo = pseudo;
     }
 }

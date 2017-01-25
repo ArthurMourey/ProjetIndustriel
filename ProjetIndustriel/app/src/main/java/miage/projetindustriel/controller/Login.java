@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -22,6 +24,8 @@ import java.util.List;
 
 import miage.projetindustriel.R;
 import miage.projetindustriel.dao.DAO;
+import miage.projetindustriel.model.Utilisateur;
+import okhttp3.internal.Util;
 
 public class Login extends AppCompatActivity {
 
@@ -87,6 +91,7 @@ public class Login extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(isValid){
+                    //Firebase cloud messaging
                     FirebaseMessaging.getInstance().subscribeToTopic("share");
                     FirebaseInstanceId.getInstance().getToken();
 
@@ -99,6 +104,9 @@ public class Login extends AppCompatActivity {
                     System.out.println(valueToken);
 
                     String insertToken = null;
+
+                    //Set du model
+                    Utilisateur.setPseudo(login);
                     try {
                         insertToken = DAO.post("http://www.madpumpkin.fr/fcm.php",tokenKey, valueToken);
                         System.out.println(insertToken);

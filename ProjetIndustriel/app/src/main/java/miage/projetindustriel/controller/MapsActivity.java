@@ -21,8 +21,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import miage.projetindustriel.R;
+import miage.projetindustriel.model.Musique;
+import miage.projetindustriel.model.Utilisateur;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -105,6 +109,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void ajouterMarqueur(double latitude, double longitude) {
+
+        //Firebase realtime database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Latitude");
+        myRef.setValue(latitude);
+        myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Longitude");
+        myRef.setValue(longitude);
+        myRef = database.getReference(Utilisateur.getPseudo()+"/Musique");
+        myRef.setValue(Musique.getMusiqueActuelle());
+
         LatLng coordonnees = new LatLng(latitude, longitude);
         CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(coordonnees, 16);
         if (marqueur != null) {
