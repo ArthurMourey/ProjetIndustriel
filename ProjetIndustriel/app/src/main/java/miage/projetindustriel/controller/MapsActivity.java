@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Marker marqueur;
-    private ArrayList<Marker> others = new ArrayList<>();
+    private HashMap<String, Marker> others = new HashMap<>();
     double latitude = 0.0;
     double longitude = 0.0;
 
@@ -80,8 +80,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void getOthersPosition(String pseudo){
@@ -93,10 +91,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HashMap<String, HashMap<String, Double>> value = (HashMap<String, HashMap<String, Double>>) dataSnapshot.getValue();
+
                 Double longitude = value.get("Location").get("Longitude");
                 Double latitude = value.get("Location").get("Latitude");
 
-                ajouterMarqueurOthers(latitude,longitude);
+                ajouterMarqueurOthers(dataSnapshot.getKey(),latitude,longitude);
             }
 
             @Override
@@ -173,9 +172,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoomLocation);
     }
 
-    private void ajouterMarqueurOthers(double latitude, double longitude) {
+    private void ajouterMarqueurOthers(String pseudo, double latitude, double longitude) {
         LatLng coordonnees = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(coordonnees).title("Coucou").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_musique))); //pseudo+" écoute '"+musique+"'"
+        if(others.get(pseudo) != null){
+            others.get(pseudo).remove();
+        }
+        Marker m = mMap.addMarker(new MarkerOptions().position(coordonnees).title(pseudo).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_musique)));
+        others.put(pseudo,m);
     }
 
     private void actualLocation(Location location) {
