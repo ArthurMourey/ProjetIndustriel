@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -21,18 +22,35 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import miage.projetindustriel.R;
+import miage.projetindustriel.dao.DAO;
 import miage.projetindustriel.model.Musique;
 import miage.projetindustriel.model.Utilisateur;
+import static android.content.ContentValues.TAG;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Marker marqueur;
+    private ArrayList<Marker> others = new ArrayList<>();
     double latitude = 0.0;
     double longitude = 0.0;
 
@@ -43,8 +61,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        List<String> pseudoKey = new ArrayList<String>();
+        List<String> pseudoValue = new ArrayList<String>();
+        pseudoKey.add("Pseudo");
+        pseudoValue.add(Utilisateur.getPseudo());
+        String listePseudo = null;
+        try {
+            listePseudo = DAO.post("http://www.madpumpkin.fr/pseudo.php",pseudoKey,pseudoValue);
+            JSONArray json = new JSONArray(listePseudo);
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject explrObject = json.getJSONObject(i);
+                String p = explrObject.getString("Pseudo");
+                getOthersPosition(p);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
+    private void getOthersPosition(String pseudo){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(pseudo);
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, HashMap<String, Double>> value = (HashMap<String, HashMap<String, Double>>) dataSnapshot.getValue();
+                Double longitude = value.get("Location").get("Longitude");
+                Double latitude = value.get("Location").get("Latitude");
+
+                ajouterMarqueurOthers(latitude,longitude);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
 
     /**
      * Manipulates the map once available.
@@ -62,13 +123,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         maLocalisation();
 
         setTitle("Géolocalisation");
-
-        /*double latitude = 0;
-        double longitude = 0;
-        LatLng artem = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(artem).title("Vous êtes ici !"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(artem));
-        */
 
         final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_map_map);
         bouton_map.setImageResource(R.drawable.geolocalisation);
@@ -110,15 +164,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void ajouterMarqueur(double latitude, double longitude) {
 
-        //Firebase realtime database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Latitude");
-        myRef.setValue(latitude);
-        myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Longitude");
-        myRef.setValue(longitude);
-        myRef = database.getReference(Utilisateur.getPseudo()+"/Musique");
-        myRef.setValue(Musique.getMusiqueActuelle());
-
         LatLng coordonnees = new LatLng(latitude, longitude);
         CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(coordonnees, 16);
         if (marqueur != null) {
@@ -128,11 +173,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoomLocation);
     }
 
+    private void ajouterMarqueurOthers(double latitude, double longitude) {
+        LatLng coordonnees = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(coordonnees).title("Coucou").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_musique))); //pseudo+" écoute '"+musique+"'"
+    }
+
     private void actualLocation(Location location) {
         if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             ajouterMarqueur(latitude, longitude);
+
+            //Firebase realtime database
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Latitude");
+            myRef.setValue(latitude);
+            myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Longitude");
+            myRef.setValue(longitude);
         }
     }
 
@@ -168,13 +225,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         actualLocation(location);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
     }
-
-    /*private void utilisateursProches(){
-        //Récupération de tous les utilisateurs
-        ArrayList<Utilisateur> listeUtilisateur = new ArrayList<>();
-        for(Utilisateur u : listeUtilisateur){
-            //Calcul de distance
-            //Si pas proche : afficher avec un marqueur
-        }
-    }*/
 }
