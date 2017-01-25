@@ -80,6 +80,7 @@ public class Login extends AppCompatActivity {
                 keys.add("password");
                 values.add(login);
                 values.add(mdp);
+
                 boolean isValid = false;
                 try {
                     String response = DAO.post("http://www.madpumpkin.fr/login_inscription.php",keys, values);
