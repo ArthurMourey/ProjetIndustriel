@@ -46,7 +46,7 @@
         </service>
 
         <activity
-            android:name=".controller.Login"
+            android:name=".controller.MusicActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,9 +54,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.MusicActivity" />
+        <!--<activity android:name=".controller.MusicActivity" />-->
         <activity android:name=".controller.MapsActivity" />
         <activity android:name=".controller.Inscription"></activity>
+
+        <activity android:name=".activities.AlbumsMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".musicplayer.MusicPlayerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".musicplayer.PlayListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".activities.PlayListPlayerMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

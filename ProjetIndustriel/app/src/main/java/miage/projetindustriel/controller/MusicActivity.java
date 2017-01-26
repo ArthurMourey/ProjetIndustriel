@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import miage.projetindustriel.R;
+import miage.projetindustriel.activities.AlbumsMainActivity;
 
 public class MusicActivity extends AppCompatActivity {
 
@@ -22,6 +23,14 @@ public class MusicActivity extends AppCompatActivity {
 
         final ImageButton bouton_music = (ImageButton) findViewById(R.id.button_music_music);
         bouton_music.setImageResource(R.drawable.musique);
+
+        bouton_music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAlbum = new Intent(MusicActivity.this, AlbumsMainActivity.class);
+                startActivity(intentAlbum);
+            }
+        });
 
         final ImageButton bouton_map = (ImageButton) findViewById(R.id.button_map_music);
         bouton_map.setImageResource(R.drawable.geolocalisation);
