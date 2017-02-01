@@ -32,7 +32,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setAutoCancel(true)
                 .setContentTitle("Musy")
                 .setContentText(message)
-                .setSmallIcon(R.drawable.ic_play_dark)
+                //.setSmallIcon(R.drawable.ic_play_dark)
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

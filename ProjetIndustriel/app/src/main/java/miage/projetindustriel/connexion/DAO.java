@@ -1,4 +1,4 @@
-package miage.projetindustriel.dao;
+package miage.projetindustriel.connexion;
 
 import java.io.BufferedReader;
 import java.io.IOException;

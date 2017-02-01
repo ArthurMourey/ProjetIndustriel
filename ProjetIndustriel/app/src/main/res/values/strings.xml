@@ -2,8 +2,18 @@
     <string name="app_name">Musy</string>
     <string name="title_activity_maps">Musy</string>
 
-    <string name="action_add_favourite">Add to Favourites</string>
-    <string name="action_play_next">Play Next</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="titres_nav_item">
+        <item>Musique</item>
+        <item>Map</item>
+        <item>Déconnexion</item>
+    </string-array>
+
+    <string name="action_add_favourite">Ajouter aux favoris</string>
+    <string name="action_play_next">Musique suivante</string>
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
 </resources>

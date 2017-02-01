@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miage.projetindustriel.R;
-import miage.projetindustriel.dao.DAO;
+import miage.projetindustriel.connexion.DAO;
 
 public class Inscription extends AppCompatActivity {
 

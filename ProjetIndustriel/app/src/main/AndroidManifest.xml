@@ -16,8 +16,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:minSdkVersion="8"
-        android:name="android.support.multidex.MultiDexApplication">
+        android:minSdkVersion="8">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,29 +45,21 @@
         </service>
 
         <activity
-            android:name=".controller.MusicActivity"
-            android:label="@string/title_activity_maps">
+            android:name=".controller.Login"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".controller.MusicActivity" />-->
-        <activity android:name=".controller.MapsActivity" />
         <activity android:name=".controller.Inscription"></activity>
+        <activity android:name=".activity.MainActivityMusy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".activities.AlbumsMainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".musicplayer.MusicPlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".musicplayer.PlayListActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".activities.PlayListPlayerMenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

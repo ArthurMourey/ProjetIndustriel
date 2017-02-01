@@ -1,14 +1,15 @@
-package miage.projetindustriel.musicplayer;
+package miage.projetindustriel.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -22,12 +23,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import miage.projetindustriel.R;
-import miage.projetindustriel.activities.PlayListPlayerMenuActivity;
 import miage.projetindustriel.model.Musique;
 import miage.projetindustriel.utility.Constantes;
 import miage.projetindustriel.utility.Utilities;
 
-public class MusicPlayerActivity extends Activity implements OnCompletionListener, SeekBar.OnSeekBarChangeListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link MusicPlayerFragment.OnFragmentMusicPlayerInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link MusicPlayerFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class MusicPlayerFragment extends Fragment implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener {
+
+
+    private OnFragmentMusicPlayerInteractionListener mListener;
 
     private ImageButton btnPlay;
     private ImageButton btnNext;
@@ -44,59 +55,73 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
     private MediaPlayer mp;
     // Handler to update UI timer, progress bar etc,.
     private Handler mHandler = new Handler();
-
     private final String TAG = getClass().getSimpleName();
-
-    private SongsManager songManager;
     private Utilities utils;
-    private int seekForwardTime = 5000; // 5000 milliseconds
-    private int seekBackwardTime = 5000; // 5000 milliseconds
     private int currentSongIndex = 0; // indice de la musique encours
     private boolean isShuffle = false;
     private boolean isRepeat = false;
     private boolean mpIsPlayerRelease = true;
-    //private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
     private ArrayList<Musique> playList = new ArrayList<>();
+    private View rootView;
 
+    private static final String LIST_MUSIQUE_ARGS = "listMusiqueAlbum";
+    private static final String POS_MUSIQUE_SELECTED_ARGS = "posSelectedMusique";
+
+    public MusicPlayerFragment() {
+        // Required empty public constructor
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static MusicPlayerFragment newInstance(ArrayList<Musique> listMusique, int positionSelectedMusique) {
+        MusicPlayerFragment fragment = new MusicPlayerFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList(LIST_MUSIQUE_ARGS, listMusique);
+        args.putInt(POS_MUSIQUE_SELECTED_ARGS, positionSelectedMusique);
+        //args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.player);
-
-        // All player buttons
-        imgBackground = (ImageView) findViewById(R.id.img_background);
-        btnPlay = (ImageButton) findViewById(R.id.btnPlay);
-        btnNext = (ImageButton) findViewById(R.id.btnNext);
-        btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
-        btnPlaylist = (ImageButton) findViewById(R.id.btnPlaylist);
-        btnRepeat = (ImageButton) findViewById(R.id.btnRepeat);
-        btnShuffle = (ImageButton) findViewById(R.id.btnShuffle);
-        songProgressBar = (SeekBar) findViewById(R.id.songProgressBar);
-        songTitleLabel = (TextView) findViewById(R.id.songTitle);
-        songCurrentDurationLabel = (TextView) findViewById(R.id.songCurrentDurationLabel);
-        songTotalDurationLabel = (TextView) findViewById(R.id.songTotalDurationLabel);
-
-
-        Intent intentFromPlaylist = getIntent();
-        if (null != intentFromPlaylist) {
-            if (intentFromPlaylist.hasExtra(PlayListActivity.PLAYLIST_EXTRA)) {
-
-                playList = intentFromPlaylist.getExtras()
-                        .getParcelableArrayList(PlayListActivity.PLAYLIST_EXTRA);
-                int posSelectedMusic = intentFromPlaylist.getIntExtra(PlayListActivity.POS_MUSIC_TO_PLAY, 0);
-                Log.v(TAG, playList.size() + "musique dans la playlist ");
-
-                mp = new MediaPlayer();
-                utils = new Utilities();
-                // Listeners
-                songProgressBar.setOnSeekBarChangeListener(this); // Important
-                mp.setOnCompletionListener(this); // Important
-                //Jouer la musique selectionnee
-                playMusique(posSelectedMusic);
-
-            }
+        if (getArguments() != null) {
+            playList = getArguments().getParcelableArrayList(LIST_MUSIQUE_ARGS);
+            currentSongIndex = getArguments().getInt(POS_MUSIQUE_SELECTED_ARGS);
+            //Musique[] musiques = (Musique[]) getArguments().getParcelableArray(MUSIQUE_ARGS);
+            //listMusique.addAll(Arrays.asList(musiques));
         }
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView =  inflater.inflate(R.layout.fragment_player, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        // All player buttons
+        imgBackground = (ImageView) rootView.findViewById(R.id.img_background);
+        btnPlay = (ImageButton) rootView.findViewById(R.id.btnPlay);
+        btnNext = (ImageButton) rootView.findViewById(R.id.btnNext);
+        btnPrevious = (ImageButton) rootView.findViewById(R.id.btnPrevious);
+        btnPlaylist = (ImageButton) rootView.findViewById(R.id.btnPlaylist);
+        btnRepeat = (ImageButton) rootView.findViewById(R.id.btnRepeat);
+        btnShuffle = (ImageButton) rootView.findViewById(R.id.btnShuffle);
+        songProgressBar = (SeekBar) rootView.findViewById(R.id.songProgressBar);
+        songTitleLabel = (TextView) rootView.findViewById(R.id.songTitle);
+        songCurrentDurationLabel = (TextView) rootView.findViewById(R.id.songCurrentDurationLabel);
+        songTotalDurationLabel = (TextView) rootView.findViewById(R.id.songTotalDurationLabel);
+
+        mp = new MediaPlayer();
+        utils = new Utilities();
+        // Listeners
+        songProgressBar.setOnSeekBarChangeListener(this); // Important
+        mp.setOnCompletionListener(this); // Important
+        //Jouer la musique selectionnee
+        playMusique(currentSongIndex);
+
 
         /**
          * Play button click event
@@ -179,12 +204,12 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
             public void onClick(View arg0) {
                 if (isRepeat) {
                     isRepeat = false;
-                    Toast.makeText(getApplicationContext(), "Repeat is OFF", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Repeat is OFF", Toast.LENGTH_SHORT).show();
                     btnRepeat.setImageResource(R.drawable.btn_repeat);
                 } else {
                     // make repeat to true
                     isRepeat = true;
-                    Toast.makeText(getApplicationContext(), "Repeat is ON", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Repeat is ON", Toast.LENGTH_SHORT).show();
                     // make shuffle to false
                     isShuffle = false;
                     btnRepeat.setImageResource(R.drawable.btn_repeat_focused);
@@ -203,12 +228,12 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
             public void onClick(View arg0) {
                 if (isShuffle) {
                     isShuffle = false;
-                    Toast.makeText(getApplicationContext(), "Shuffle is OFF", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Shuffle is OFF", Toast.LENGTH_SHORT).show();
                     btnShuffle.setImageResource(R.drawable.btn_shuffle);
                 } else {
                     // make repeat to true
                     isShuffle = true;
-                    Toast.makeText(getApplicationContext(), "Shuffle is ON", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Shuffle is ON", Toast.LENGTH_SHORT).show();
                     // make shuffle to false
                     isRepeat = false;
                     btnShuffle.setImageResource(R.drawable.btn_shuffle_focused);
@@ -226,37 +251,18 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
             @Override
             public void onClick(View arg0) {
 
-                Intent intent = new Intent(MusicPlayerActivity.this, PlayListPlayerMenuActivity.class);
+                /*Intent intent = new Intent(MusicPlayerActivity.this, PlayListPlayerMenuActivity.class);
 
                 intent.putParcelableArrayListExtra(PlayListActivity.PLAYLIST_EXTRA, playList);
-                startActivityForResult(intent, RESULT_OK);
+                startActivityForResult(intent, RESULT_OK);*/
 
                /* Intent i = new Intent(getApplicationContext(), PlayListActivity.class);
                 startActivityForResult(i, 100);*/
             }
         });
 
+        return rootView;
     }
-
-
-    /**
-     * Receiving song index from playlist view
-     * and play the song
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //on activity result ne marche pas
-        Log.v(TAG, "curentSondIndex in OnActivResult");
-        if (resultCode == RESULT_OK) {
-            currentSongIndex = data.getExtras().getInt(PlayListActivity.POS_MUSIC_TO_PLAY);
-            Log.v(TAG, "curentSondIndex in OnActivResult = " + currentSongIndex);
-            // play selected song
-            playMusique(currentSongIndex);
-        }
-
-    }
-
 
     private String buildMusiqueUrl(String urlMusique) {
 
@@ -408,12 +414,49 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mp.release();
-        mpIsPlayerRelease = true;
 
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(String uri) {
+        if (mListener != null) {
+            mListener.onFragmentMusicPlayerInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentMusicPlayerInteractionListener) {
+            mListener = (OnFragmentMusicPlayerInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+        if(null != mp){
+            mp.release();
+            mpIsPlayerRelease = true;
+        }
+
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentMusicPlayerInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentMusicPlayerInteraction(String uri);
     }
 
 }
