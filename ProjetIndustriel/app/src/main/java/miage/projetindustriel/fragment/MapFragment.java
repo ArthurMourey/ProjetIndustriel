@@ -19,7 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -55,6 +58,7 @@ import static android.content.ContentValues.TAG;
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
+    MapView mMapView;
     private Marker marqueur;
     private HashMap<String, Marker> others = new HashMap<>();
     double latitude = 0.0;
@@ -97,11 +101,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_map, container, false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        //SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
         //mapFragment.getMapAsync(this);
+        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume(); //appel obligatoire pour afficher immediatement la map
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mMapView.getMapAsync(this);
+
 
         List<String> pseudoKey = new ArrayList<String>();
         List<String> pseudoValue = new ArrayList<String>();
@@ -121,7 +135,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         final ImageButton bouton_lecture = (ImageButton) rootView.findViewById(R.id.lecture);
         bouton_lecture.setImageResource(R.drawable.lecture);
 
@@ -156,7 +169,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         maLocalisation();
 
         //setTitle("Géolocalisation");
@@ -205,7 +217,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if(others.get(pseudo) != null){
             others.get(pseudo).remove();
         }
-        Marker m = mMap.addMarker(new MarkerOptions().position(coordonnees).title(pseudo).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_musique)));
+        Marker m = mMap.addMarker(new MarkerOptions()
+                .position(coordonnees)
+                .title(pseudo)
+                .icon(BitmapDescriptorFactory.fromResource(
+                        R.mipmap.ic_musique)));
         others.put(pseudo,m);
     }
 
@@ -286,6 +302,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
