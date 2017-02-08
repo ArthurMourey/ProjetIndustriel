@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.Random;
 
 import miage.projetindustriel.R;
 import miage.projetindustriel.model.Musique;
+import miage.projetindustriel.model.Utilisateur;
 import miage.projetindustriel.utility.Constantes;
 import miage.projetindustriel.utility.Utilities;
 
@@ -86,6 +88,7 @@ public class MusicPlayerFragment extends Fragment implements MediaPlayer.OnCompl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
             playList = getArguments().getParcelableArrayList(LIST_MUSIQUE_ARGS);
             currentSongIndex = getArguments().getInt(POS_MUSIQUE_SELECTED_ARGS);
             //Musique[] musiques = (Musique[]) getArguments().getParcelableArray(MUSIQUE_ARGS);
@@ -282,9 +285,10 @@ public class MusicPlayerFragment extends Fragment implements MediaPlayer.OnCompl
     private void playMusique(int positionMusique) {
 
         Musique musique = playList.get(positionMusique);
+        Utilisateur.setCurrentMusique(musique);
         String url = buildMusiqueUrl(musique.getUrlSon());
         String urlImage = playList.get(positionMusique).getCoverPhoto();
-        //Log.v("UrlImage", urlImage);
+
         Glide.with(this).load(urlImage)
                 .placeholder(R.drawable.adele)
                 .into(imgBackground);

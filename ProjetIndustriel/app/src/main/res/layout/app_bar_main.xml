@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:textColorHint="#000000"
             android:hint="@string/cherche_bar_hint"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </android.support.design.widget.AppBarLayout>
 

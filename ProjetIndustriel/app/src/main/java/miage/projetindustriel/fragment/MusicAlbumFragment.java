@@ -92,7 +92,7 @@ public class MusicAlbumFragment extends Fragment implements RecycleViewItemClick
         //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
-        initCollapsingToolbar();
+        //initCollapsingToolbar();
 
         //listMusique = new ArrayList<>();
         Log.v(TAG, "nb Musique "+listMusique.size());

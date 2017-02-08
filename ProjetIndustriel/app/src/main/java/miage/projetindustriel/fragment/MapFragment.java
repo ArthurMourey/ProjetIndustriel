@@ -44,6 +44,7 @@ import java.util.List;
 
 import miage.projetindustriel.R;
 import miage.projetindustriel.connexion.DAO;
+import miage.projetindustriel.model.Musique;
 import miage.projetindustriel.model.Utilisateur;
 
 import static android.content.ContentValues.TAG;
@@ -185,12 +186,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, HashMap<String, Double>> value = (HashMap<String, HashMap<String, Double>>) dataSnapshot.getValue();
+                System.out.println("svinipnviunvpoNSVUNSPDOINVPISnvipnFSDINVIFDSUNVFUIQDNIVPUFDQNBUDFQNBIUDFNUVIQUVPJsdhj : "+ dataSnapshot);
+                HashMap<String, HashMap<String, HashMap<String, String>>> value = (HashMap<String, HashMap<String, HashMap<String, String>>>) dataSnapshot.getValue();
 
-                Double longitude = value.get("Location").get("Longitude");
-                Double latitude = value.get("Location").get("Latitude");
+                String titreMusique = value.get("Info").get("Musique").get("Titre");
+                Double longitude = Double.parseDouble(String.valueOf(value.get("Info").get("Location").get("Longitude")));
+                Double latitude = Double.parseDouble(String.valueOf(value.get("Info").get("Location").get("Latitude")));
 
-                ajouterMarqueurOthers(dataSnapshot.getKey(),latitude,longitude);
+                ajouterMarqueurOthers(dataSnapshot.getKey(),titreMusique,latitude,longitude);
             }
 
             @Override
@@ -212,14 +215,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.animateCamera(zoomLocation);
     }
 
-    private void ajouterMarqueurOthers(String pseudo, double latitude, double longitude) {
+    private void ajouterMarqueurOthers(String pseudo, String titreMusique, double latitude, double longitude) {
         LatLng coordonnees = new LatLng(latitude, longitude);
         if(others.get(pseudo) != null){
             others.get(pseudo).remove();
         }
         Marker m = mMap.addMarker(new MarkerOptions()
                 .position(coordonnees)
-                .title(pseudo)
+                .title(pseudo+" écoute "+titreMusique)
                 .icon(BitmapDescriptorFactory.fromResource(
                         R.mipmap.ic_musique)));
         others.put(pseudo,m);
@@ -231,12 +234,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             longitude = location.getLongitude();
             ajouterMarqueur(latitude, longitude);
 
+            Musique musique = Utilisateur.getCurrentMusique();
+
             //Firebase realtime database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Latitude");
+            DatabaseReference myRef = database.getReference(Utilisateur.getPseudo()+"/Info/Location/Latitude");
             myRef.setValue(latitude);
-            myRef = database.getReference(Utilisateur.getPseudo()+"/Location/Longitude");
+            myRef = database.getReference(Utilisateur.getPseudo()+"/Info/Location/Longitude");
             myRef.setValue(longitude);
+
+            if (musique != null) {
+                myRef = database.getReference(Utilisateur.getPseudo()+"/Info/Musique/Titre");
+                myRef.setValue(musique.getTitre());
+            }
         }
     }
 

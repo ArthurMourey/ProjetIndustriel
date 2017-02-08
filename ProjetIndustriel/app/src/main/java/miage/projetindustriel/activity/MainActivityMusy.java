@@ -106,6 +106,7 @@ public class MainActivityMusy extends AppCompatActivity implements
                 //des suggestions
                 //Toast.makeText(getApplicationContext(), "searchViewShown", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "searchViewShown");
+                searchView.setVisibility(View.VISIBLE);
             }
 
             @Override

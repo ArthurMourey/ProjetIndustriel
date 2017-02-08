@@ -39,28 +39,18 @@ public class Login extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         //Si une inscription s'est correctement effectuée
-        Boolean inscription;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                inscription = null;
             } else {
-                inscription = extras.getBoolean("inscription");
-                if(inscription == true) {
-                    TextView t = (TextView) findViewById(R.id.errorMessage);
-                    t.setTextColor(Color.GREEN);
-                    t.setText("Inscription réussie.");
-                    inscription = null;
-                }
-            }
-        } else {
-            inscription= (Boolean) savedInstanceState.getSerializable("inscription");
-            if(inscription == true) {
                 TextView t = (TextView) findViewById(R.id.errorMessage);
                 t.setTextColor(Color.GREEN);
                 t.setText("Inscription réussie.");
-                inscription = null;
             }
+        } else {
+            TextView t = (TextView) findViewById(R.id.errorMessage);
+            t.setTextColor(Color.GREEN);
+            t.setText("Inscription réussie.");
         }
 
         final Button loginButton = (Button) findViewById(R.id.connection_button);

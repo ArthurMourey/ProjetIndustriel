@@ -8,6 +8,7 @@ public class Utilisateur {
     private static String nom;
     private static String prenom;
     private static String pseudo;
+    private static Musique currentMusique;
 
     public Utilisateur(String prenom, String nom, String pseudo) {
         this.prenom = prenom;
@@ -37,5 +38,13 @@ public class Utilisateur {
 
     public static void setPseudo(String pseudo) {
         Utilisateur.pseudo = pseudo;
+    }
+
+    public static Musique getCurrentMusique() {
+        return currentMusique;
+    }
+
+    public static void setCurrentMusique(Musique currentMusique) {
+        Utilisateur.currentMusique = currentMusique;
     }
 }
