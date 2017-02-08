@@ -82,6 +82,7 @@ public class Inscription extends AppCompatActivity {
                             myRef = database.getReference(login+"/Info/Location/Longitude");
                             myRef.setValue("1");
                             startActivity(intent);
+                            finish();
                         }
                         else{
                             TextView t = (TextView) findViewById(R.id.errorMessageInscription);

@@ -1,6 +1,7 @@
 package miage.projetindustriel.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -31,6 +32,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 
 import miage.projetindustriel.R;
+import miage.projetindustriel.controller.Login;
 import miage.projetindustriel.fragment.AlbumFragment;
 import miage.projetindustriel.fragment.MapFragment;
 import miage.projetindustriel.fragment.MusicAlbumFragment;
@@ -48,7 +50,7 @@ public class MainActivityMusy extends AppCompatActivity implements
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
-    private ImageView imageViewPhoto, imageViewNavHeaderBg;
+    private ImageView imageViewPhoto, imageViewNavHeaderBg, img_header_bg;
     private TextView textViewNomPrenom, textViewEmail;
     private Toolbar toolbar;
     //private FloatingActionButton fab;
@@ -124,7 +126,7 @@ public class MainActivityMusy extends AppCompatActivity implements
 
         //les elements du navigation header
         navHeader = navigationView.getHeaderView(0);
-        textViewNomPrenom = (TextView) navHeader.findViewById(R.id.nom_prenom);
+        textViewNomPrenom = (TextView) navHeader.findViewById(R.id.login_nav_bar);
         textViewEmail = (TextView) navHeader.findViewById(R.id.email);
         imageViewPhoto = (ImageView) navHeader.findViewById(R.id.img_photo_profile);
         imageViewNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
@@ -166,20 +168,22 @@ public class MainActivityMusy extends AppCompatActivity implements
 
     private void initialiserDonneesNavigationHeader() {
 
-        textViewNomPrenom.setText("Nom Prénom");
+        textViewNomPrenom.setText(getIntent().getStringExtra("login"));
         textViewEmail.setText("email@example.com");
+
+
         // loading header background image
-        Glide.with(this).load(R.drawable.nav_menu_header_bg)
+        /*Glide.with(this).load(R.drawable.nav_menu_header_bg)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageViewNavHeaderBg);
+                .into(imageViewNavHeaderBg);*/
 
-        Glide.with(this).load(R.drawable.ic_profile)
+        /*Glide.with(this).load(R.drawable.ic_profile)
                 .crossFade()
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageViewPhoto);
+                .into(imageViewPhoto);*/
     }
 
 
@@ -203,8 +207,9 @@ public class MainActivityMusy extends AppCompatActivity implements
                         TAG_FRAG_COURANT = TAG_FRAG_MAP;
                         break;
                     case R.id.nav_deconnexion:
-                        navMenuSelectedIndex = 2;
-                        drawer.closeDrawers();
+                        finish();
+                        Intent intent = new Intent(MainActivityMusy.this, Login.class);
+                        startActivity(intent);
                         break;
                     case R.id.nav_share:
                         //navMenuSelectedIndex = 3;

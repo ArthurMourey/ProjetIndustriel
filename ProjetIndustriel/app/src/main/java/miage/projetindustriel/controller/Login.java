@@ -27,6 +27,8 @@ import miage.projetindustriel.model.Utilisateur;
 
 public class Login extends AppCompatActivity {
 
+    private TextView login_nav_bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,9 @@ public class Login extends AppCompatActivity {
                     }
 
                     Intent intent = new Intent(Login.this, MainActivityMusy.class);
+                    intent.putExtra("login",login);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     TextView t = (TextView) findViewById(R.id.errorMessage);
