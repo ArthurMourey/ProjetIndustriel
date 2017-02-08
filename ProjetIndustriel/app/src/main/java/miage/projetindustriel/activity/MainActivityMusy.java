@@ -1,7 +1,9 @@
 package miage.projetindustriel.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,14 +14,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
@@ -45,6 +52,8 @@ public class MainActivityMusy extends AppCompatActivity implements
     private TextView textViewNomPrenom, textViewEmail;
     private Toolbar toolbar;
     //private FloatingActionButton fab;
+    MaterialSearchView searchView ;
+
 
     //les tags pour identifier les fragments
     private static final String TAG_FRAG_MUSIQUE = "album";
@@ -67,6 +76,44 @@ public class MainActivityMusy extends AppCompatActivity implements
         setContentView(R.layout.activity_main_musy);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(true);
+        searchView.showVoice(true);
+        searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.v(TAG, "onQueryTextSubmit");
+                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
+                //searchView.
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.v(TAG, "onQueryTextChange");
+                //Toast.makeText(getApplicationContext(), "onQueryTextChange", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //charger ici les titre des musiques depuis la base pour faire
+                //des suggestions
+                //Toast.makeText(getApplicationContext(), "searchViewShown", Toast.LENGTH_LONG).show();
+                Log.v(TAG, "searchViewShown");
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                Log.v(TAG, "searchViewClose");
+                //Toast.makeText(getApplicationContext(), "searchViewClose", Toast.LENGTH_LONG).show();
+            }
+        });
 
         mHandler = new Handler();
 
@@ -106,6 +153,15 @@ public class MainActivityMusy extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
 
     private void initialiserDonneesNavigationHeader() {
 
@@ -187,6 +243,14 @@ public class MainActivityMusy extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
+
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+            return;
+        } else {
+            super.onBackPressed();
+        }
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             return;

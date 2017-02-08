@@ -13,11 +13,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +45,7 @@ public class MusicAlbumFragment extends Fragment implements RecycleViewItemClick
 
 
     private OnFragmentMusicAlbumInteractionListener mListener;
+
 
     private String TAG = getClass().getSimpleName();
     private RecyclerView recyclerView;
@@ -116,6 +121,16 @@ public class MusicAlbumFragment extends Fragment implements RecycleViewItemClick
         return rootView;
 
     }
+
+    /*@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }*/
 
     /**
      * Initializing collapsing toolbar

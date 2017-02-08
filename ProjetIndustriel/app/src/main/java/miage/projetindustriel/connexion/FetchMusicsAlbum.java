@@ -71,7 +71,7 @@ public class FetchMusicsAlbum extends AsyncTask<Integer, Void, Musique[]> {
         final String ALBUM_ID = "albumId";
         final String TITRE = "titre";
         final String DUREE = "duree";
-        final String COVER_PHOTO = "coverPhoto";
+        final String COVER_PHOTO = "coverImage";
         final String URL_SON = "url";
 
         JSONObject jsonObject = new JSONObject(musiquesJsonString);

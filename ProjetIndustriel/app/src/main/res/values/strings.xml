@@ -11,6 +11,15 @@
         <item>Map</item>
         <item>Déconnexion</item>
     </string-array>
+    <string name="cherche_bar_hint">Rechercher une musique</string>
+
+    <string-array name="query_suggestions">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+    </string-array>
 
     <string name="action_add_favourite">Ajouter aux favoris</string>
     <string name="action_play_next">Musique suivante</string>

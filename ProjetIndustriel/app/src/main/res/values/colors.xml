@@ -6,4 +6,8 @@
 
     <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>
+
+    <color name="theme_primary">#2152f3</color>
+    <color name="theme_primary_text_inverted">#ffffff</color>
+    <color name="theme_secondary_text_inverted">#523bea</color>
 </resources>
