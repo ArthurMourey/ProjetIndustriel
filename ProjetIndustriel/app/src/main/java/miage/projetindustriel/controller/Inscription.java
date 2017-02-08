@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +20,9 @@ import miage.projetindustriel.R;
 import miage.projetindustriel.connexion.DAO;
 
 public class Inscription extends AppCompatActivity {
+
+    //Firebase realtime database
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +74,13 @@ public class Inscription extends AppCompatActivity {
                         System.out.println(response);
                         if(response.contains("SUCCESS")){
                             Intent intent = new Intent(Inscription.this, Login.class);
-                            intent.putExtra("inscription",true);
+                            Toast.makeText(getApplicationContext(),"Inscription Réussie",Toast.LENGTH_LONG).show();
+                            DatabaseReference myRef = database.getReference(login+"/Info/Musique/Titre");
+                            myRef.setValue("rien pour le moment");
+                            myRef = database.getReference(login+"/Info/Location/Latitude");
+                            myRef.setValue("1");
+                            myRef = database.getReference(login+"/Info/Location/Longitude");
+                            myRef.setValue("1");
                             startActivity(intent);
                         }
                         else{

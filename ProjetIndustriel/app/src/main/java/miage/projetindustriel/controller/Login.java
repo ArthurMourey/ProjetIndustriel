@@ -38,21 +38,6 @@ public class Login extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Si une inscription s'est correctement effectuée
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-            } else {
-                TextView t = (TextView) findViewById(R.id.errorMessage);
-                t.setTextColor(Color.GREEN);
-                t.setText("Inscription réussie.");
-            }
-        } else {
-            TextView t = (TextView) findViewById(R.id.errorMessage);
-            t.setTextColor(Color.GREEN);
-            t.setText("Inscription réussie.");
-        }
-
         final Button loginButton = (Button) findViewById(R.id.connection_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
 
