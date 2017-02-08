@@ -3,6 +3,9 @@ package miage.projetindustriel.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by utilisateur on 08/01/2017.
  */
@@ -15,6 +18,8 @@ public class Musique implements Parcelable {
     private String coverPhoto;
     private String urlSon;
 
+
+
     public Musique(int id, int idAlbum, String titre, String duree, String coverPhoto, String urlSon) {
         this.id = id;
         this.idAlbum = idAlbum;
@@ -22,6 +27,7 @@ public class Musique implements Parcelable {
         this.duree = duree;
         this.coverPhoto = coverPhoto;
         this.urlSon = urlSon;
+
     }
 
     public Musique(Parcel in){

@@ -1,5 +1,8 @@
 package miage.projetindustriel.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Asus on 18/01/2017.
  */
@@ -9,6 +12,9 @@ public class Utilisateur {
     private static String prenom;
     private static String pseudo;
     private static Musique currentMusique;
+
+    //Firebase realtime database
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public Utilisateur(String prenom, String nom, String pseudo) {
         this.prenom = prenom;
@@ -46,5 +52,7 @@ public class Utilisateur {
 
     public static void setCurrentMusique(Musique currentMusique) {
         Utilisateur.currentMusique = currentMusique;
+        DatabaseReference myRef = database.getReference(pseudo+"/Info/Musique/Titre");
+        myRef.setValue(currentMusique.getTitre());
     }
 }
