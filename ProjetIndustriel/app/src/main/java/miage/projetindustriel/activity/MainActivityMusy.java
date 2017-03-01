@@ -253,8 +253,6 @@ public class MainActivityMusy extends AppCompatActivity implements
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
             return;
-        } else {
-            super.onBackPressed();
         }
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -449,11 +447,12 @@ public class MainActivityMusy extends AppCompatActivity implements
                 fragmentTransaction.commitAllowingStateLoss();
                 //fragmentTransaction.addToBackStack(null);
                 //Log.v(TAG, "finish added fragPlayer Ext " + fragPlayerAddedToBackStack);
-                if (!fragPlayerAddedToBackStack) {
+                /*if (!fragPlayerAddedToBackStack) {
                     fragmentTransaction.addToBackStack(null);
                     fragPlayerAddedToBackStack = true;
                     Log.v(TAG, "finish added fragPlayer " + fragPlayerAddedToBackStack);
-                }
+                }*/
+                fragmentTransaction.addToBackStack(null);
 
                 //fragmentTransaction.commit();
                 //TAG_FRAG_COURANT = TAG_FRAG_MUSIC_ALBUM;

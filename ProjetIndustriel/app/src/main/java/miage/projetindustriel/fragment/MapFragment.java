@@ -186,7 +186,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("svinipnviunvpoNSVUNSPDOINVPISnvipnFSDINVIFDSUNVFUIQDNIVPUFDQNBUDFQNBIUDFNUVIQUVPJsdhj : "+ dataSnapshot);
+                System.out.println("dataSnapshot : "+ dataSnapshot);
                 HashMap<String, HashMap<String, HashMap<String, String>>> value = (HashMap<String, HashMap<String, HashMap<String, String>>>) dataSnapshot.getValue();
 
                 String titreMusique = value.get("Info").get("Musique").get("Titre");
@@ -224,7 +224,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .position(coordonnees)
                 .title(pseudo+" écoute "+titreMusique)
                 .icon(BitmapDescriptorFactory.fromResource(
-                        R.mipmap.ic_musique)));
+                        R.mipmap.ic_musique)
+                ));
         others.put(pseudo,m);
     }
 
